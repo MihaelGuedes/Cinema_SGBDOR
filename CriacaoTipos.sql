@@ -1,6 +1,6 @@
 CREATE OR REPLACE TYPE tp_telefone AS OBJECT (
 
-    numero VARCHAR2 (14)
+    contato VARCHAR2(50)
 
 );
 /
@@ -10,34 +10,25 @@ CREATE OR REPLACE TYPE tp_arr_telefone AS VARRAY (5) OF tp_telefone;
 -- Tipo que armazena endereços 
 CREATE OR REPLACE TYPE tp_endereco AS OBJECT(
 
-    cep VARCHAR2(9),
-    numero NUMBER,
     rua VARCHAR2(50),
-    bairro VARCHAR2(50),
+    numero NUMBER,
+    cep VARCHAR2(9),
     cidade VARCHAR2(50),
-    estado VARCHAR2(50)
     
 );
 /
-
--- tem a tabela pessoa mas embaixo eu declaro cliente e funcionário, então não sei se ela vai realmente ser nescessária
 CREATE OR REPLACE TYPE tp_pessoa AS OBJECT(
     
     cpf VARCHAR2(14),
     nome VARCHAR2(30),
     telefone tp_arr_telefone,
     endereco tp_endereco,
+    idade NUMBER
 
 ) NOT FINAL NOT INSTANTIABLE;
-
---- "NOT FINAL" indica que a classe não é final, ou seja, ela pode ser estendida por outras classes. Se a classe for definida como "FINAL", ela não pode ser estendida.
--- "NOT INSTANTIABLE" indica que a classe não pode ser instanciada. Isso significa que você não pode criar objetos diretamente daquela classe. Geralmente, essa opção é usada quando você deseja criar uma classe apenas para definir atributos e métodos que serão compartilhados por outras classes. Nesse caso, as outras classes que estendem a classe não instanciável podem criar objetos e herdar seus métodos e atributos.
-
-
--- adicionar esses detalhes de endereço, acho que fica melhor com esse detalhamento
 /
 CREATE OR REPLACE TYPE BODY tp_pessoa AS
-    MEMBER PROCEDURE display_info IS
+    MEMBER PROCEDURE get_pessoa_info IS
     BEGIN
         DBMS_OUTPUT.PUT_LINE('Nome: ' || nome);
         DBMS_OUTPUT.PUT_LINE('CPF: ' || cpf);
@@ -45,26 +36,18 @@ CREATE OR REPLACE TYPE BODY tp_pessoa AS
     FINAL MEMBER PROCEDURE display_address IS
     BEGIN
         DBMS_OUTPUT.PUT_LINE('O seu nome é ' || nome);
-        DBMS_OUTPUT.PUT_LINE('Ele(a) mora em ' || endereco.cidade || ', ' || endereco.estado);
+        DBMS_OUTPUT.PUT_LINE('Ele(a) mora em ' || endereco.cidade || ', ');
         DBMS_OUTPUT.PUT_LINE(endereco.cep);
     END;
 END;
 /
--- Tipo funcionario
-CREATE OR REPLACE TYPE tb_funcionario AS OBJECT(
-
-    cpf VARCHAR2(14),
-    nome VARCHAR2(30),
-    idade NUMBER,
-    telefone tp_arr_telefone,
-    endereco tp_endereco,
-    salario NUMBER,
+CREATE OR REPLACE TYPE tp_funcionario UNDER tp_pessoa(
     cargo VARCHAR2(30),
-    cadastro_funcionario DATE,
-    supervisor_cpf VARCHAR2(14),
-    MEMBER FUNCTION get_nome_supervisor RETURN VARCHAR2,
-    MEMBER FUNCTION get_telefone_supervisor RETURN tp_arr_telefone,
-    MEMBER PROCEDURE set_supervisor_cpf (p_supervisor_cpf VARCHAR2)
+    salario NUMBER
+    
+    cadastro_funcionario UNIQUE
+
+    OVERRIDING MEMBER PROCEDURE get_pessoa_info -- dando override para imprimir o cargo, salário, além das outras informações
 );
 /
 
@@ -77,7 +60,7 @@ CREATE OR REPLACE TYPE tp_cliente AS OBJECT (
     endereco tp_endereco,
     fidelidade VARCHAR2(1),
     CONSTRUCTOR FUNCTION tp_cliente RETURN SELF AS RESULT,
-    MEMBER PROCEDURE display_info
+    MEMBER PROCEDURE get_pessoa_info
 );
 /
 
@@ -87,7 +70,7 @@ CREATE OR REPLACE TYPE BODY tp_cliente AS
         RETURN;
     END;
     
-    OVERRIDING MEMBER PROCEDURE display_info IS
+    OVERRIDING MEMBER PROCEDURE get_pessoa_info IS
     BEGIN
         DBMS_OUTPUT.PUT_LINE('Nome: ' || nome);
         DBMS_OUTPUT.PUT_LINE('CPF: ' || cpf);
