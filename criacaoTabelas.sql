@@ -117,3 +117,4 @@ CREATE TABLE tb_limpa OF tp_limpa(
     id_sala WITH ROWID REFERENCES tb_sala NOT NULL,
     cpf_funcionario WITH ROWID REFERENCES tb_funcionario NOT NULL,
 );
+
