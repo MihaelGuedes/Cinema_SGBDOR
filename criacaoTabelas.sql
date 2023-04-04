@@ -7,7 +7,6 @@ CREATE TABLE tb_cargo OF tp_cargo (
 
 -- TABELA FUNCIONARIOS --
 
--- TODO: E esse tp_corretor??
 CREATE TABLE tb_funcionario OF tp_corretor (
     cpf PRIMARY KEY,
     nome NOT NULL,

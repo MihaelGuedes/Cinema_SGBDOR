@@ -131,11 +131,33 @@ CREATE OR REPLACE TYPE tp_filme AS OBJECT(
     nome VARCHAR2(50),
     elenco tp_arr_elenco,
     duracao VARCHAR2(5),
-    diretor VARCHAR2(20)
+    diretor VARCHAR2(20),
+    CONSTRUCTOR FUNCTION tp_filme (f1 tp_filme) RETURN SELF AS RESULT,
+    MAP MEMBER FUNCTION num_elenco RETURN NUMBER
+
 );
 /
 
 CREATE OR REPLACE TYPE BODY tp_filme AS
+    CONSTRUCTOR FUNCTION tp_filme (f1 tp_filme) RETURN SELF AS RESULT IS
+        BEGIN
+            id_filme := f1.id_filme; 
+            genero := f1.genero; 
+            classificacao_indicativa := f1.classificacao_indicativa; 
+            nome := f1.nome;
+            elenco := f1.elenco; 
+            duracao := f1.duracao; 
+            diretor := f1.diretor; 
+            RETURN; 
+        END;
+
+    MAP MEMBER FUNCTION num_elenco RETURN NUMBER IS 
+         num_count NUMBER;
+    BEGIN
+         SELECT COUNT (*) INTO num_count FROM TABLE (self.elenco);
+         RETURN num_count;
+    END;
+
     MEMBER PROCEDURE get_filme_info IS
     BEGIN
         DBMS_OUTPUT.PUT_LINE('Nome: ' || nome);
@@ -205,15 +227,34 @@ CREATE OR REPLACE TYPE tp_limpa AS OBJECT (
 
 CREATE OR REPLACE TYPE tp_cupom AS OBJECT (
     id NUMBER,
-    desconto NUMBER
+    desconto NUMBER  --  0.2 0.5 ,
+    ORDER MEMBER FUNCTION comparar_desconto(cupom tp_cupom) RETURN NUMBER,
 );
 /
+
+CREATE OR REPLACE TYPE BODY tp_cupom AS 
+    ORDER MEMBER FUNCTION comparar_desconto (cupom tp_cupom) RETURN NUMBER IS
+    BEGIN 
+        return cupom.desconto - SELF.desconto;
+    END;
+END;
+/
+
 CREATE OR REPLACE TYPE tp_compra AS OBJECT (
     id_compra NUMBER,
     data_compra DATE,
     ingresso REF tp_ingresso,
     cpf_cliente VARCHAR2(14),
-    id_cupom NUMBER
+    MEMBER FUNCTION get_ingresso_com_desconto RETURN NUMBER;
 
 );
+/
+ALTER TYPE tp_compra ADD attribute (cupom ref tp_cupom);
+/
+
+CREATE OR REPLACE TYPE BODY tp_compra AS
+    MEMBER FUNCTION get_ingresso_com_desconto RETURN NUMBER IS
+    BEGIN
+        RETURN ingresso.valor * (1 - cupom.desconto);
+    END;
 /
