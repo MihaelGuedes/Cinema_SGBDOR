@@ -48,6 +48,20 @@ CREATE OR REPLACE TYPE tp_funcionario UNDER tp_pessoa(
 
     OVERRIDING MEMBER PROCEDURE get_pessoa_info -- dando override para imprimir o cargo, salário, além das outras informações
 );
+
+/
+
+CREATE OR REPLACE TYPE BODY tp_funcionario AS
+    OVERRIDING MEMBER PROCEDURE get_pessoa_info IS
+    BEGIN
+        DBMS_OUTPUT.PUT_LINE('Nome: ' || nome);
+        DBMS_OUTPUT.PUT_LINE('CPF: ' || cpf);
+        DBMS_OUTPUT.PUT_LINE('cargo: ' || cargo);
+        DBMS_OUTPUT.PUT_LINE('salario: ' || salario);
+        DBMS_OUTPUT.PUT_LINE('cadastro_funcionario: ' || cadastro_funcionario);
+    END;
+END;
+
 /
 
 CREATE OR REPLACE TYPE tp_supervisiona AS OBJECT (
@@ -57,58 +71,72 @@ CREATE OR REPLACE TYPE tp_supervisiona AS OBJECT (
 
 /
 
--- Tipo cliente
-CREATE OR REPLACE TYPE tp_cliente AS OBJECT (
-    cpf VARCHAR2(14),
-    nome VARCHAR2(30),
-    idade VARCHAR2(3),
-    telefone tp_arr_telefone,
-    endereco tp_endereco,
-    fidelidade VARCHAR2(1),
-    CONSTRUCTOR FUNCTION tp_cliente RETURN SELF AS RESULT,
-    MEMBER PROCEDURE get_pessoa_info
+CREATE OR REPLACE TYPE tp_cliente UNDER tp_pessoa(
+   fidelidade NUMBER
+    OVERRIDING MEMBER PROCEDURE get_pessoa_info
 );
+
 /
 
 CREATE OR REPLACE TYPE BODY tp_cliente AS
-    CONSTRUCTOR FUNCTION tp_cliente RETURN SELF AS RESULT IS
-    BEGIN
-        RETURN;
-    END;
-    
     OVERRIDING MEMBER PROCEDURE get_pessoa_info IS
     BEGIN
         DBMS_OUTPUT.PUT_LINE('Nome: ' || nome);
         DBMS_OUTPUT.PUT_LINE('CPF: ' || cpf);
-        DBMS_OUTPUT.PUT_LINE('Idade: ' || idade);
-        DBMS_OUTPUT.PUT_LINE('Telefone: ');
-        FOR i IN telefone.FIRST..telefone.LAST LOOP
-            DBMS_OUTPUT.PUT_LINE('     ' || telefone(i));
-        END LOOP;
-        DBMS_OUTPUT.PUT_LINE('Endereco: ');
-        DBMS_OUTPUT.PUT_LINE('     ' || endereco.rua || ', ' || endereco.numero);
-        DBMS_OUTPUT.PUT_LINE('     ' || endereco.bairro || ', ' || endereco.cidade || ' - ' || endereco.estado);
-        DBMS_OUTPUT.PUT_LINE('Fidelidade: ' || fidelidade);
+        DBMS_OUTPUT.PUT_LINE('fidelidade: ' || fidelidade);
+       
     END;
 END;
-/
-CREATE TYPE filme_type AS OBJECT (
 
-    codigo NUMBER(5),
-    titulo VARCHAR2(100),
-    duracao NUMBER(3),
-    classificacao CHAR(2),
-    diretor VARCHAR2(100),
-    genero VARCHAR2(50),
-    sinopse VARCHAR2(1000)
+/
+
+CREATE OR REPLACE TYPE tp_elenco AS OBJECT (
+
+    id_filme UNIQUE
+    nome_ator VARCHAR2(30)
+
 );
-/
-CREATE TYPE sala_type AS OBJECT (
 
+/
+
+-- Criando array para atributo multivalorado
+CREATE OR REPLACE TYPE tp_arr_elenco AS VARRAY (5) OF tp_elenco;
+
+/
+
+CREATE OR REPLACE TYPE tp_filme AS OBJECT(
+
+    id_filme UNIQUE,
+    genero VARCHAR2(35),
+    classificacao VARCHAR2(10),
+    nome VARCHAR2(50),
+    duracao VARCHAR2(5),
+    diretor VARCHAR2(20),
+);
+
+/
+
+CREATE OR REPLACE TYPE BODY tp_filme AS
+    MEMBER PROCEDURE get_pessoa_info IS
+    BEGIN
+        DBMS_OUTPUT.PUT_LINE('Nome: ' || nome);
+        DBMS_OUTPUT.PUT_LINE('genero: ' || genero);
+        DBMS_OUTPUT.PUT_LINE('classificacao: ' || classificacao);
+        DBMS_OUTPUT.PUT_LINE('diretor: ' || diretor);
+        DBMS_OUTPUT.PUT_LINE('duracao: ' || duracao);
+    END;
+END;
+
+/
+
+CREATE TYPE sala_type AS OBJECT (
+    id_sala NUMBER()
     numero NUMBER(3),
     capacidade NUMBER(3)
 );
+
 /
+
 CREATE TYPE sessao_type AS OBJECT (
 
     codigo NUMBER(5),
@@ -117,7 +145,9 @@ CREATE TYPE sessao_type AS OBJECT (
     horario DATE,
     valor_ingresso NUMBER(6,2)
 );
+
 /
+
 CREATE TYPE ingresso_type AS OBJECT (
 
     codigo NUMBER(5),
