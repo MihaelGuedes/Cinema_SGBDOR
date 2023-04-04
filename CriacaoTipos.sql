@@ -44,11 +44,17 @@ END;
 CREATE OR REPLACE TYPE tp_funcionario UNDER tp_pessoa(
     cargo VARCHAR2(30),
     salario NUMBER
-    
     cadastro_funcionario UNIQUE
 
     OVERRIDING MEMBER PROCEDURE get_pessoa_info -- dando override para imprimir o cargo, salário, além das outras informações
 );
+/
+
+CREATE OR REPLACE TYPE tp_supervisiona AS OBJECT (
+    cpf_supervisiona REF tp_funcionario,
+    cpf_supervisionado REF tp_funcionario,
+);
+
 /
 
 -- Tipo cliente
