@@ -240,7 +240,7 @@ CREATE OR REPLACE TYPE tp_compra AS OBJECT (
     id_compra NUMBER,
     data_compra DATE,
     ingresso REF tp_ingresso,
-    cliente REF tb_cliente,
+    cliente REF tp_cliente,
     MEMBER FUNCTION get_ingresso_com_desconto RETURN NUMBER
 
 );

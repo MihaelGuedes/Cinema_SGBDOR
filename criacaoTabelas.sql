@@ -5,9 +5,9 @@ CREATE TABLE tb_cliente OF tp_cliente (
     telefone NOT NULL,
     idade NOT NULL,
     endereco NOT NULL,
-    fidelidade NOT NULL
+    fidelidade NOT NULL,
     CONSTRAINT cliente_ck CHECK (cpf LIKE ('___.___.___-__'))
-)
+);
 /
 -- TABELA FUNCIONARIO --
 CREATE TABLE tb_funcionario OF tp_funcionario (
@@ -20,7 +20,7 @@ CREATE TABLE tb_funcionario OF tp_funcionario (
     salario NOT NULL, 
     cadastro_funcionario NOT NULL UNIQUE,
     CONSTRAINT funcionario_ck CHECK (cpf LIKE ('___.___.___-__'))
-)
+);
 /
 
 -- Tabela de supervisão
