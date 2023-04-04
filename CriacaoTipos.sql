@@ -5,7 +5,7 @@ CREATE OR REPLACE TYPE tp_telefone AS OBJECT (
 );
 /
 -- Criando array para atributo multivalorado
-CREATE OR REPLACE TYPE tp_arr_telefone AS VARRAY (5) OF tp_telefone;
+CREATE OR REPLACE TYPE tp_arr_telefone AS VARRAY (5) OF tp_telefon;e
 /
 -- Tipo que armazena endereços 
 CREATE OR REPLACE TYPE tp_endereco AS OBJECT(
@@ -45,11 +45,37 @@ CREATE OR REPLACE TYPE tp_funcionario UNDER tp_pessoa(
     cargo VARCHAR2(30),
     salario NUMBER
     cadastro_funcionario UNIQUE
-
     OVERRIDING MEMBER PROCEDURE get_pessoa_info -- dando override para imprimir o cargo, salário, além das outras informações
 );
 /
+CREATE OR REPLACE TYPE tp_cliente UNDER tp_pessoa(
+    fidelidade NUMBER,
+     MEMBER PROCEDURE get_fidelidade_cliente -- dando override para imprimir o cargo, salário, além das outras informações
+);
+/
 
+CREATE OR REPLACE TYPE BODY tp_cliente AS 
+MEMBER PROCEDURE get_fidelidade_cliente  IS
+    BEGIN
+        DBMS_OUTPUT.PUT_LINE(fidelidade);
+    END;
+END;
+/
+
+
+CREATE OR REPPLACE TYPE BODY tp_funcionario  AS
+   OVERRIDING MEMBER PROCEDURE get_pessoa_info IS
+    BEGIN
+        DBMS_OUTPUT.PUT_LINE('Nome: ' || nome);
+        DBMS_OUTPUT.PUT_LINE('CPF: ' || cpf);
+        DBMS_OUTPUT.PUT_LINE('Salario: ' || salario);
+        DBMS_OUTPUT.PUT_LINE('Cargo: ' || cargo);
+        DBMS_OUTPUT.PUT_LINE('Cadastro Funcionario: ' || cadastro_funcionario);
+    END;
+
+END;
+
+/
 CREATE OR REPLACE TYPE tp_supervisiona AS OBJECT (
     cpf_supervisiona REF tp_funcionario,
     cpf_supervisionado REF tp_funcionario,
@@ -92,17 +118,46 @@ CREATE OR REPLACE TYPE BODY tp_cliente AS
     END;
 END;
 /
-CREATE TYPE filme_type AS OBJECT (
+CREATE OR REPLACE TYPE tp_elenco AS OBJECT (
 
-    codigo NUMBER(5),
-    titulo VARCHAR2(100),
-    duracao NUMBER(3),
-    classificacao CHAR(2),
-    diretor VARCHAR2(100),
-    genero VARCHAR2(50),
-    sinopse VARCHAR2(1000)
+    id_filme UNIQUE
+    nome_ator VARCHAR2(30)
+
 );
+
 /
+
+-- Criando array para atributo multivalorado
+CREATE OR REPLACE TYPE tp_arr_elenco AS VARRAY (5) OF tp_elenco;
+
+/
+
+CREATE OR REPLACE TYPE tp_filme AS OBJECT(
+
+    id_filme UNIQUE,
+    genero VARCHAR2(35),
+    classificacao VARCHAR2(10),
+    nome VARCHAR2(50),
+    duracao VARCHAR2(5),
+    diretor VARCHAR2(20),
+);
+
+/
+
+CREATE OR REPLACE TYPE BODY tp_filme AS
+    MEMBER PROCEDURE get_pessoa_info IS
+    BEGIN
+        DBMS_OUTPUT.PUT_LINE('Nome: '  nome);
+        DBMS_OUTPUT.PUT_LINE('genero: '  genero);
+        DBMS_OUTPUT.PUT_LINE('classificacao: '  classificacao);
+        DBMS_OUTPUT.PUT_LINE('diretor: '  diretor);
+        DBMS_OUTPUT.PUT_LINE('duracao: ' || duracao);
+    END;
+END;
+
+/
+
+
 CREATE TYPE sala_type AS OBJECT (
 
     numero NUMBER(3),
