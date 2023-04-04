@@ -240,13 +240,13 @@ CREATE OR REPLACE TYPE tp_compra AS OBJECT (
     id_compra NUMBER,
     data_compra DATE,
     ingresso REF tp_ingresso,
-    cpf_cliente VARCHAR2(14),
+    cliente REF tb_cliente,
     MEMBER FUNCTION get_ingresso_com_desconto RETURN NUMBER
 
 );
 /
 
-ALTER TYPE tp_compra ADD attribute (cupom ref tp_cupom);
+ALTER TYPE tp_compra ADD attribute (cupom REF tp_cupom);
 /
 
 CREATE OR REPLACE TYPE BODY tp_compra AS
