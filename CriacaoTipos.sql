@@ -20,10 +20,10 @@ CREATE OR REPLACE TYPE tp_endereco AS OBJECT(
 CREATE OR REPLACE TYPE tp_pessoa AS OBJECT(
     
     cpf VARCHAR2(14),
+    idade NUMBER
     nome VARCHAR2(30),
     telefone tp_arr_telefone,
     endereco tp_endereco,
-    idade NUMBER
 
 ) NOT FINAL NOT INSTANTIABLE;
 /
@@ -33,7 +33,7 @@ CREATE OR REPLACE TYPE BODY tp_pessoa AS
         DBMS_OUTPUT.PUT_LINE('Nome: ' || nome);
         DBMS_OUTPUT.PUT_LINE('CPF: ' || cpf);
     END;
-    FINAL MEMBER PROCEDURE display_address IS
+    FINAL MEMBER PROCEDURE get_pessoa_endereco IS
     BEGIN
         DBMS_OUTPUT.PUT_LINE('O seu nome é ' || nome);
         DBMS_OUTPUT.PUT_LINE('Ele(a) mora em ' || endereco.cidade || ', ');
@@ -41,13 +41,13 @@ CREATE OR REPLACE TYPE BODY tp_pessoa AS
     END;
 END;
 /
+
 CREATE OR REPLACE TYPE tp_funcionario UNDER tp_pessoa(
     cargo VARCHAR2(30),
     salario NUMBER,
     cadastro_funcionario UNIQUE,
     OVERRIDING MEMBER PROCEDURE get_pessoa_info -- dando override para imprimir o cargo, salário, além das outras informações
 );
-
 /
 
 CREATE OR REPLACE TYPE BODY tp_funcionario AS
@@ -98,7 +98,7 @@ CREATE OR REPLACE TYPE tp_supervisiona AS OBJECT (
 /
 
 CREATE OR REPLACE TYPE tp_cliente UNDER tp_pessoa(
-     fidelidade NUMBER
+     fidelidade NUMBER,
     OVERRIDING MEMBER PROCEDURE get_pessoa_info
 );
 
@@ -145,7 +145,6 @@ CREATE OR REPLACE TYPE BODY tp_filme AS
         DBMS_OUTPUT.PUT_LINE('duracao: ' || duracao);
     END;
 END;
-
 /
 
 CREATE OR REPLACE TYPE tp_sala  AS OBJECT (
@@ -153,7 +152,6 @@ CREATE OR REPLACE TYPE tp_sala  AS OBJECT (
     numero NUMBER(3),
     capacidade NUMBER(3)
 );
-
 /
 
 CREATE OR REPLACE TYPE tp_sessao AS OBJECT (
@@ -199,7 +197,7 @@ CREATE OR REPLACE TYPE tp_reserva AS OBJECT (
 /
 
 CREATE OR REPLACE TYPE tp_limpa AS OBJECT (
-    data DATE
+    data DATE,
     sala REF tp_sala UNIQUE ,
     funcionario REF tp_funcionario UNIQUE
 );
