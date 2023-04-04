@@ -17,16 +17,19 @@ CREATE OR REPLACE TYPE tp_endereco AS OBJECT(
     
 );
 /
+
 CREATE OR REPLACE TYPE tp_pessoa AS OBJECT(
     
     cpf VARCHAR2(14),
-    idade NUMBER
+    idade NUMBER,
     nome VARCHAR2(30),
     telefone tp_arr_telefone,
     endereco tp_endereco,
-
+    MEMBER PROCEDURE get_pessoa_info,
+    MEMBER PROCEDURE get_pessoa_endereco
 ) NOT FINAL NOT INSTANTIABLE;
 /
+    
 CREATE OR REPLACE TYPE BODY tp_pessoa AS
     MEMBER PROCEDURE get_pessoa_info IS
     BEGIN
@@ -45,9 +48,10 @@ END;
 CREATE OR REPLACE TYPE tp_funcionario UNDER tp_pessoa(
     cargo VARCHAR2(30),
     salario NUMBER,
-    cadastro_funcionario UNIQUE,
-    OVERRIDING MEMBER PROCEDURE get_pessoa_info -- dando override para imprimir o cargo, salário, além das outras informações
+    cadastro_funcionario INTEGER,
+    OVERRIDING MEMBER PROCEDURE get_pessoa_info
 );
+
 /
 
 CREATE OR REPLACE TYPE BODY tp_funcionario AS
@@ -60,11 +64,10 @@ CREATE OR REPLACE TYPE BODY tp_funcionario AS
         DBMS_OUTPUT.PUT_LINE('cadastro_funcionario: ' || cadastro_funcionario);
     END;
 END;
-
 /
 CREATE OR REPLACE TYPE tp_cliente UNDER tp_pessoa(
     fidelidade NUMBER,
-     MEMBER PROCEDURE get_fidelidade_cliente -- dando override para imprimir o cargo, salário, além das outras informações
+     MEMBER PROCEDURE get_fidelidade_cliente
 );
 /
 
@@ -169,37 +172,30 @@ CREATE OR REPLACE TYPE BODY tp_filme AS
 END;
 /
 
-CREATE OR REPLACE TYPE tp_sala  AS OBJECT (
-    id_sala NUMBER,
-    numero NUMBER(3),
-    capacidade NUMBER(3)
-);
-/
-
-CREATE OR REPLACE TYPE tp_sessao AS OBJECT (
-    codigo NUMBER(5),
-    filme filme_type,
-    sala tp_sala,
-    horario DATE,
-    valor_ingresso NUMBER(6,2)
-);
-
-/
-CREATE OR REPLACE tp_assento AS OBJECT (
+CREATE OR REPLACE TYPE tp_assento AS OBJECT (
     cod_assento NUMBER,
     tipo VARCHAR2(10)
 );
 /
 
 CREATE OR REPLACE TYPE tp_nt_assentos AS TABLE OF tp_assento;
-/ 
-
+/
 
 CREATE OR REPLACE TYPE tp_sala AS OBJECT (
     id_sala NUMBER,
     capacidade NUMBER,
     assentos tp_nt_assentos
 );
+/
+
+CREATE OR REPLACE TYPE tp_sessao AS OBJECT (
+    codigo NUMBER(5),
+    filme tp_filme,
+    sala tp_sala,
+    horario DATE,
+    valor_ingresso NUMBER(6,2)
+);
+
 /
 
 
@@ -220,15 +216,15 @@ CREATE OR REPLACE TYPE tp_reserva AS OBJECT (
 
 CREATE OR REPLACE TYPE tp_limpa AS OBJECT (
     data DATE,
-    sala REF tp_sala UNIQUE ,
-    funcionario REF tp_funcionario UNIQUE
+    sala REF tp_sala,
+    funcionario REF tp_funcionario
 );
 /
 
 CREATE OR REPLACE TYPE tp_cupom AS OBJECT (
     id NUMBER,
-    desconto NUMBER  --  0.2 0.5 ,
-    ORDER MEMBER FUNCTION comparar_desconto(cupom tp_cupom) RETURN NUMBER,
+    desconto NUMBER,
+    ORDER MEMBER FUNCTION comparar_desconto(cupom tp_cupom) RETURN NUMBER
 );
 /
 
@@ -245,10 +241,11 @@ CREATE OR REPLACE TYPE tp_compra AS OBJECT (
     data_compra DATE,
     ingresso REF tp_ingresso,
     cpf_cliente VARCHAR2(14),
-    MEMBER FUNCTION get_ingresso_com_desconto RETURN NUMBER;
+    MEMBER FUNCTION get_ingresso_com_desconto RETURN NUMBER
 
 );
 /
+
 ALTER TYPE tp_compra ADD attribute (cupom ref tp_cupom);
 /
 
