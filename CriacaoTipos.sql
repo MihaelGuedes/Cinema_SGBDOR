@@ -26,7 +26,7 @@ CREATE OR REPLACE TYPE tp_pessoa AS OBJECT(
     idade NUMBER,
     endereco tp_endereco,
     MEMBER PROCEDURE get_pessoa_info,
-    MEMBER PROCEDURE get_pessoa_endereco
+    FINAL MEMBER PROCEDURE get_pessoa_endereco
 ) NOT FINAL NOT INSTANTIABLE;
 /
     
@@ -39,7 +39,7 @@ CREATE OR REPLACE TYPE BODY tp_pessoa AS
     FINAL MEMBER PROCEDURE get_pessoa_endereco IS
     BEGIN
         DBMS_OUTPUT.PUT_LINE('O seu nome é ' || nome);
-        DBMS_OUTPUT.PUT_LINE('Ele(a) mora em ' || endereco.cidade || ', ');
+        DBMS_OUTPUT.PUT_LINE('Ele(a) mora em ' || endereco.cidade );
         DBMS_OUTPUT.PUT_LINE(endereco.cep);
     END;
 END;
@@ -65,19 +65,7 @@ CREATE OR REPLACE TYPE BODY tp_funcionario AS
     END;
 END;
 /
-CREATE OR REPLACE TYPE tp_cliente UNDER tp_pessoa(
-    fidelidade NUMBER,
-     MEMBER PROCEDURE get_fidelidade_cliente
-);
-/
 
-CREATE OR REPLACE TYPE BODY tp_cliente AS 
-MEMBER PROCEDURE get_fidelidade_cliente  IS
-    BEGIN
-        DBMS_OUTPUT.PUT_LINE(fidelidade);
-    END;
-END;
-/
 
 
 CREATE OR REPLACE TYPE BODY tp_funcionario  AS
@@ -101,10 +89,10 @@ CREATE OR REPLACE TYPE tp_supervisiona AS OBJECT (
 /
 
 CREATE OR REPLACE TYPE tp_cliente UNDER tp_pessoa(
-     fidelidade NUMBER,
-    OVERRIDING MEMBER PROCEDURE get_pessoa_info
+    fidelidade NUMBER,
+    OVERRIDING MEMBER PROCEDURE get_pessoa_info,
+    MEMBER PROCEDURE get_fidelidade_cliente
 );
-
 /
 
 CREATE OR REPLACE TYPE BODY tp_cliente AS
@@ -114,6 +102,10 @@ CREATE OR REPLACE TYPE BODY tp_cliente AS
         DBMS_OUTPUT.PUT_LINE('CPF: ' || cpf);
         DBMS_OUTPUT.PUT_LINE('fidelidade: ' || fidelidade);
        
+    END;
+    MEMBER PROCEDURE get_fidelidade_cliente  IS
+    BEGIN
+        DBMS_OUTPUT.PUT_LINE(fidelidade);
     END;
 END;
 /
@@ -136,8 +128,8 @@ CREATE OR REPLACE TYPE tp_filme AS OBJECT(
     duracao VARCHAR2(5),
     diretor VARCHAR2(20),
     CONSTRUCTOR FUNCTION tp_filme (f1 tp_filme) RETURN SELF AS RESULT,
-    MAP MEMBER FUNCTION num_elenco RETURN NUMBER
-
+    MAP MEMBER FUNCTION num_elenco RETURN NUMBER,
+    MEMBER PROCEDURE get_filme_info
 );
 /
 
@@ -240,7 +232,14 @@ ALTER TYPE tp_compra ADD attribute (cupom REF tp_cupom);
 
 CREATE OR REPLACE TYPE BODY tp_compra AS
     MEMBER FUNCTION get_ingresso_com_desconto RETURN NUMBER IS
+    desconto NUMBER;
+    valor_final NUMBER;
+    valor NUMBER;
+
     BEGIN
-        RETURN ingresso.valor * (1 - cupom.desconto);
+        SELECT DEREF(cupom).desconto, DEREF(ingresso).valor INTO desconto, valor from tb_compra WHERE id_compra = self.id_compra;
+        valor_final := valor * (1 - desconto);
+        RETURN valor_final;
     END;
+END;
 /
