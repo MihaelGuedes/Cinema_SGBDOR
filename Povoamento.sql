@@ -173,19 +173,69 @@ INSERT INTO tb_supervisiona VALUES (
 
 INSERT INTO tb_cupom VALUES (
   tp_cupom(
+      3,
+      0.3
+  )
+);
+/
+INSERT INTO tb_cupom VALUES (
+  tp_cupom(
+      5,
+      0.5
+  )
+);
+/
+INSERT INTO tb_cupom VALUES (
+  tp_cupom(
+      ,
+      0.2
+  )
+);
+/
+INSERT INTO tb_cupom VALUES (
+  tp_cupom(
       1,
+      0.1
+  )
+);
+/
+
+
+INSERT INTO tb_ingresso VALUES (
+  tp_ingresso(
+      '1234',
+      'I',
       30
   )
 );
 /
+
 INSERT INTO tb_ingresso VALUES (
   tp_ingresso(
-      '1234',
+      '23232',
+      'M',
+      10
+  )
+);
+/
+
+INSERT INTO tb_ingresso VALUES (
+  tp_ingresso(
+      '1312',
       'M',
       15
   )
 );
 /
+
+INSERT INTO tb_ingresso VALUES (
+  tp_ingresso(
+      '3123',
+      'I',
+      75
+  )
+);
+
 INSERT INTO tb_compra VALUES (
   tp_compra(
     id_compra.NEXTVAL,
