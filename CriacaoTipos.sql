@@ -21,9 +21,9 @@ CREATE OR REPLACE TYPE tp_endereco AS OBJECT(
 CREATE OR REPLACE TYPE tp_pessoa AS OBJECT(
     
     cpf VARCHAR2(14),
-    idade NUMBER,
     nome VARCHAR2(30),
     telefone tp_arr_telefone,
+    idade NUMBER,
     endereco tp_endereco,
     MEMBER PROCEDURE get_pessoa_info,
     MEMBER PROCEDURE get_pessoa_endereco
