@@ -345,6 +345,120 @@ INSERT INTO tb_sala VALUES (
 );
 
 /
+INSERT INTO tb_sala VALUES (
+    tp_sala(
+      2,
+      10,
+      tp_nt_assentos(
+        tp_assento(
+          1,
+          'Normal'
+        ),
+        tp_assento(
+          2,
+          'Normal'
+        ),
+        tp_assento(
+          3,
+          'Normal'
+        ),
+        tp_assento(
+          4,
+          'Normal'
+        ),
+        tp_assento(
+          5,
+          'Normal'
+        ),
+        tp_assento(
+          6,
+          'Normal'
+        ),
+        tp_assento(
+          7,
+          'Especial'
+        ),
+        tp_assento(
+          8,
+          'Normal'
+        ),
+        tp_assento(
+          9,
+          'Especial'
+        ),
+        tp_assento(
+          10,
+          'Especial'
+        )
+      )
+    )
+);
+
+/
+INSERT INTO tb_sala VALUES (
+    tp_sala(
+      3,
+      3,
+      tp_nt_assentos(
+        tp_assento(
+          1,
+          'Normal'
+        ),
+        tp_assento(
+          2,
+          'Especial'
+        ),
+        tp_assento(
+          3,
+          'Normal'
+        )
+      )
+    )
+);
+/
+INSERT INTO tb_sala VALUES (
+    tp_sala(
+      4,
+      8,
+      tp_nt_assentos(
+        tp_assento(
+          1,
+          'Normal'
+        ),
+        tp_assento(
+          2,
+          'Normal'
+        ),
+        tp_assento(
+          3,
+          'Normal'
+        ),
+        tp_assento(
+          4,
+          'Normal'
+        ),
+        tp_assento(
+          5,
+          'Normal'
+        ),
+        tp_assento(
+          6,
+          'Normal'
+        ),
+        tp_assento(
+          7,
+          'Normal'
+        ),
+        tp_assento(
+          8,
+          'Normal'
+        )
+      )
+    )
+);
+
+/
+
 INSERT INTO tb_reserva VALUES (
   tp_reserva(
   (TO_DATE('2022-07-30 13:11', 'yyyy-mm-dd hh24:mi')),
