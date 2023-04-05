@@ -9,6 +9,7 @@ CREATE TABLE tb_cliente OF tp_cliente (
     CONSTRAINT cliente_ck CHECK (cpf LIKE ('___.___.___-__'))
 );
 /
+
 -- TABELA FUNCIONARIO --
 CREATE TABLE tb_funcionario OF tp_funcionario (
     cpf PRIMARY KEY,
@@ -25,8 +26,8 @@ CREATE TABLE tb_funcionario OF tp_funcionario (
 
 -- Tabela de supervisão
 CREATE TABLE tb_supervisiona OF tp_supervisiona (
-    supervisor WITH ROWID REFERENCES tp_funcionario NOT NULL,
-    supervisionado WITH ROWID REFERENCES tp_funcionario NOT NULL,
+    supervisor WITH ROWID REFERENCES tb_funcionario NOT NULL,
+    supervisionado WITH ROWID REFERENCES tb_funcionario NOT NULL
 );
 /
 
@@ -46,13 +47,12 @@ CREATE TABLE tb_ingresso OF tp_ingresso (
 /
 
 -- TABELA DE COMPRAS --
-
 CREATE TABLE tb_compra OF tp_compra (
     id_compra PRIMARY KEY,
     data_compra NOT NULL,
-    cliente WITH ROWID REFERENCES tb_cliente NOT NULL,
-    cupom WITH ROWID REFERENCES tb_cupom NOT NULL,
     ingresso WITH ROWID REFERENCES tb_ingresso NOT NULL,
+    cliente WITH ROWID REFERENCES tb_cliente NOT NULL,
+    cupom WITH ROWID REFERENCES tb_cupom NOT NULL
 );
 /
 
@@ -60,37 +60,41 @@ CREATE TABLE tb_compra OF tp_compra (
 CREATE TABLE tb_filme OF tp_filme(
     id_filme PRIMARY KEY,
     genero NOT NULL,
-    classificacao_indicativa NOT NULL
+    classificacao_indicativa NOT NULL,
     nome NOT NULL,
     elenco NOT NULL,
     duracao NOT NULL,
-    diretor NOT NULL,
+    diretor NOT NULL
 );
 
 -- TABELA DE SALA --
 CREATE TABLE tb_sala OF tp_sala(
     id_sala PRIMARY KEY,
-    capacidade NOT NULL,
+    capacidade NOT NULL
 ) NESTED TABLE assentos STORE AS assentos_da_sala;
 /
+
 -- TABELA DE ASSENTO --
 CREATE TABLE tb_assento OF tp_assento(
-    CONSTRAINT pk_assento PRIMARY KEY (id_sala,cod_assento)
+    cod_assento PRIMARY KEY,
     tipo_assento NOT NULL,
+    sala WITH ROWID REFERENCES tb_sala NOT NULL
 );
 /
+
 -- TABELA DE RESERVA --
 CREATE TABLE tb_reserva OF tp_reserva(
     data_reserva NOT NULL,
     filme WITH ROWID REFERENCES tb_filme NOT NULL,
     ingresso WITH ROWID REFERENCES tb_ingresso NOT NULL,
-    assento WITH ROWID REFERENCES tb_assento NOT NULL,
+    assento WITH ROWID REFERENCES tb_assento NOT NULL
 );
 /
+
 -- TABELA LIMPA --
 CREATE TABLE tb_limpa OF tp_limpa(
     data PRIMARY KEY,
     sala WITH ROWID REFERENCES tb_sala NOT NULL,
-    funcionario WITH ROWID REFERENCES tb_funcionario NOT NULL,
+    funcionario WITH ROWID REFERENCES tb_funcionario NOT NULL
 );
 

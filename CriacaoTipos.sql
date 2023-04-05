@@ -94,8 +94,8 @@ END;
 
 /
 CREATE OR REPLACE TYPE tp_supervisiona AS OBJECT (
-    cpf_supervisiona REF tp_funcionario,
-    cpf_supervisionado REF tp_funcionario
+    supervisor REF tp_funcionario,
+    supervisionado REF tp_funcionario
 );
 
 /
@@ -174,7 +174,8 @@ END;
 
 CREATE OR REPLACE TYPE tp_assento AS OBJECT (
     cod_assento NUMBER,
-    tipo VARCHAR2(10)
+    tipo_assento VARCHAR2(10),
+    sala REF tp_sala
 );
 /
 
@@ -187,17 +188,6 @@ CREATE OR REPLACE TYPE tp_sala AS OBJECT (
     assentos tp_nt_assentos
 );
 /
-
-CREATE OR REPLACE TYPE tp_sessao AS OBJECT (
-    codigo NUMBER(5),
-    filme tp_filme,
-    sala tp_sala,
-    horario DATE,
-    valor_ingresso NUMBER(6,2)
-);
-
-/
-
 
 CREATE OR REPLACE TYPE tp_ingresso AS OBJECT (
     cod_ingresso INTEGER,
@@ -222,7 +212,7 @@ CREATE OR REPLACE TYPE tp_limpa AS OBJECT (
 /
 
 CREATE OR REPLACE TYPE tp_cupom AS OBJECT (
-    id NUMBER,
+    id_cupom NUMBER,
     desconto NUMBER,
     ORDER MEMBER FUNCTION comparar_desconto(cupom tp_cupom) RETURN NUMBER
 );
