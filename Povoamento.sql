@@ -9,6 +9,76 @@ INSERT INTO tb_cliente VALUES (
     )
 );
 /
+INSERT INTO tb_cliente VALUES (
+    tp_cliente(
+        '987.654.321-00',
+        'John Doe',
+        tp_arr_telefone(tp_telefone('(11)12345-6789')),
+        25,
+        tp_endereco('Av. Paulista', 123, '01311-000', 'São Paulo'),
+        2
+    )
+);
+/
+INSERT INTO tb_cliente VALUES (
+    tp_cliente(
+        '111.222.333-44',
+        'Jane Smith',
+        tp_arr_telefone(tp_telefone('(21)98765-4321')),
+        32,
+        tp_endereco('Rua da Praia', 567, '22000-000', 'Rio de Janeiro'),
+        1
+    )
+);
+/
+
+INSERT INTO tb_cliente VALUES (
+    tp_cliente(
+        '555.666.777-88',
+        'Michael Johnson',
+        tp_arr_telefone(tp_telefone('(31)55555-4444')),
+        40,
+        tp_endereco('Avenida Central', 789, '30100-111', 'Belo Horizonte'),
+        3
+    )
+);
+/
+INSERT INTO tb_cliente VALUES (
+    tp_cliente(
+        '444.555.666-77',
+        'Maria Santos',
+        tp_arr_telefone(tp_telefone('(61)44444-5555')),
+        36,
+        tp_endereco('Av. Sete de Setembro', 303, '70000-444', 'Brasília'),
+        1
+    )
+);
+/
+INSERT INTO tb_cliente VALUES (
+    tp_cliente(
+        '999.000.111-22',
+        'Carlos Oliveira',
+        tp_arr_telefone(tp_telefone('(71)99999-0000')),
+        50,
+        tp_endereco('Rua do Comércio', 404, '40000-555', 'Salvador'),
+        2
+    )
+);
+/
+
+
+
+INSERT INTO tb_cliente VALUES (
+    tp_cliente(
+        '111.222.333-44',
+        'Laura Garcia',
+        tp_arr_telefone(tp_telefone('(84)11111-2222')),
+        29,
+        tp_endereco('Av. Beira Mar', 505, '59000-666', 'Natal'),
+        3
+    )
+);
+/
 
 INSERT INTO tb_funcionario VALUES (
     tp_funcionario(
@@ -23,7 +93,6 @@ INSERT INTO tb_funcionario VALUES (
     )
 );
 /
-
 INSERT INTO tb_funcionario VALUES (
     tp_funcionario(
         '232.462.625-97',
