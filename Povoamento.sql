@@ -107,6 +107,60 @@ INSERT INTO tb_funcionario VALUES (
 );
 
 /
+INSERT INTO tb_funcionario VALUES (
+    tp_funcionario(
+        '987.654.321-01',
+        'John Doe',
+        tp_arr_telefone(tp_telefone('(11)12345-6789')),
+        25,
+        tp_endereco('Av. Paulista', 123, '01311-000', 'São Paulo'),
+        'atendente',
+        '1500',
+        2
+    )
+);
+/
+INSERT INTO tb_funcionario VALUES (
+    tp_funcionario(
+        '111.222.333-02',
+        'Jane Smith',
+        tp_arr_telefone(tp_telefone('(21)98765-4321')),
+        32,
+        tp_endereco('Rua da Praia', 567, '22000-000', 'Rio de Janeiro'),
+        'vendedor',
+        '1800',
+        1
+    )
+);
+/
+INSERT INTO tb_funcionario VALUES (
+    tp_funcionario(
+        '555.666.777-03',
+        'Michael Johnson',
+        tp_arr_telefone(tp_telefone('(31)55555-4444')),
+        40,
+        tp_endereco('Avenida Central', 789, '30100-111', 'Belo Horizonte'),
+        'estoquista',
+        '1600',
+        3
+    )
+);
+/
+
+INSERT INTO tb_funcionario VALUES (
+    tp_funcionario(
+        '777.888.999-04',
+        'Anna Lee',
+        tp_arr_telefone(tp_telefone('(41)77777-8888')),
+        22,
+        tp_endereco('Rua das Flores', 101, '80000-222', 'Curitiba'),
+        'caixa',
+        '1700',
+        2
+    )
+);
+/
+
 
 INSERT INTO tb_supervisiona VALUES (
     tp_supervisiona(
