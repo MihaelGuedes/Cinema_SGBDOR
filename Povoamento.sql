@@ -260,6 +260,61 @@ INSERT INTO tb_filme VALUES (
     )
 );
 /
+INSERT INTO tb_filme VALUES (
+    tp_filme(
+      2,
+      'Ação',
+      12,
+      'Velozes e Furiosos 9',
+      tp_arr_elenco(tp_elenco('Vin Diesel')),
+      '02:15',
+      'Justin Lin'
+    )
+);
+/
+INSERT INTO tb_filme VALUES (
+    tp_filme(
+      3,
+      'Comédia',
+      14,
+      'Superbad',
+      tp_arr_elenco(tp_elenco('Jonah Hill'), tp_elenco('Michael Cera'), tp_elenco('Christopher Mintz-Plasse')),
+      '01:53',
+      'Greg Mottola'
+    )
+);
+/
+
+
+
+INSERT INTO tb_filme VALUES (
+    tp_filme(
+      4,
+      'Drama',
+      16,
+      'O Lado Bom da Vida',
+      tp_arr_elenco(tp_elenco('Bradley Cooper'), tp_elenco('Jennifer Lawrence'), tp_elenco('Robert De Niro')),
+      '02:02',
+      'David O. Russell'
+    )
+);
+/
+
+
+INSERT INTO tb_filme VALUES (
+    tp_filme(
+      5,
+      'Animação',
+      10,
+      'Toy Story 4',
+      tp_arr_elenco(tp_elenco('Tom Hanks')),
+      '01:40',
+      'Josh Cooley'
+    )
+);
+/
+
+
 INSERT INTO tb_sala VALUES (
     tp_sala(
       1,
