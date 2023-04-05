@@ -1,3 +1,4 @@
+
 INSERT INTO tb_cliente VALUES (
     tp_cliente(
         '132.462.635-17',
@@ -27,7 +28,7 @@ INSERT INTO tb_cliente VALUES (
         tp_arr_telefone(tp_telefone('(21)98765-4321')),
         32,
         tp_endereco('Rua da Praia', 567, '22000-000', 'Rio de Janeiro'),
-        1
+        12312
     )
 );
 /
@@ -39,7 +40,7 @@ INSERT INTO tb_cliente VALUES (
         tp_arr_telefone(tp_telefone('(31)55555-4444')),
         40,
         tp_endereco('Avenida Central', 789, '30100-111', 'Belo Horizonte'),
-        3
+        1312323
     )
 );
 /
@@ -70,7 +71,7 @@ INSERT INTO tb_cliente VALUES (
 
 INSERT INTO tb_cliente VALUES (
     tp_cliente(
-        '111.222.333-44',
+        '121.222.333-44',
         'Laura Garcia',
         tp_arr_telefone(tp_telefone('(84)11111-2222')),
         29,
@@ -89,7 +90,7 @@ INSERT INTO tb_funcionario VALUES (
         tp_endereco('Rua joaquim', 42, '50670-490','Olinda'),
         'gerente',
         '1900',
-        1
+        8575
     )
 );
 /
@@ -102,21 +103,21 @@ INSERT INTO tb_funcionario VALUES (
         tp_endereco('Rua joaquim', 42, '50670-490','Olinda'),
         'lanterninha',
         '1000',
-        2
+        415
     )
 );
 
 /
 INSERT INTO tb_funcionario VALUES (
     tp_funcionario(
-        '987.654.321-01',
+        '957.654.321-01',
         'John Doe',
         tp_arr_telefone(tp_telefone('(11)12345-6789')),
         25,
         tp_endereco('Av. Paulista', 123, '01311-000', 'São Paulo'),
         'atendente',
         '1500',
-        2
+       21
     )
 );
 /
@@ -129,7 +130,7 @@ INSERT INTO tb_funcionario VALUES (
         tp_endereco('Rua da Praia', 567, '22000-000', 'Rio de Janeiro'),
         'vendedor',
         '1800',
-        1
+       934534
     )
 );
 /
@@ -142,7 +143,7 @@ INSERT INTO tb_funcionario VALUES (
         tp_endereco('Avenida Central', 789, '30100-111', 'Belo Horizonte'),
         'estoquista',
         '1600',
-        3
+       34324
     )
 );
 /
@@ -156,7 +157,7 @@ INSERT INTO tb_funcionario VALUES (
         tp_endereco('Rua das Flores', 101, '80000-222', 'Curitiba'),
         'caixa',
         '1700',
-        2
+       2343412
     )
 );
 /
@@ -187,7 +188,7 @@ INSERT INTO tb_cupom VALUES (
 /
 INSERT INTO tb_cupom VALUES (
   tp_cupom(
-      ,
+      2,
       0.2
   )
 );
@@ -200,6 +201,22 @@ INSERT INTO tb_cupom VALUES (
 );
 /
 
+INSERT INTO tb_assento VALUES (
+1,
+'Normal'
+)
+/
+INSERT INTO tb_assento VALUES (
+2,
+'Normal'
+)
+/
+
+INSERT INTO tb_assento VALUES (
+3,
+'Especial'
+)
+/
 
 INSERT INTO tb_ingresso VALUES (
   tp_ingresso(
@@ -235,18 +252,18 @@ INSERT INTO tb_ingresso VALUES (
       75
   )
 );
+/
 
 INSERT INTO tb_compra VALUES (
   tp_compra(
     id_compra.NEXTVAL,
   (TO_DATE('2022-07-30 13:11', 'yyyy-mm-dd hh24:mi')),
     (SELECT REF(I) FROM tb_ingresso I WHERE I.COD_INGRESSO = 1234),
-    (SELECT REF(C) FROM tb_cliente C WHERE C.CPF = '132.462.635-97'),
+    (SELECT REF(C) FROM tb_cliente C WHERE C.CPF = '132.462.635-17'),
     (SELECT REF(CP) FROM tb_cupom CP WHERE CP.id_cupom = 1)
 )
     );
 /
-
 
 INSERT INTO tb_filme VALUES (
     tp_filme(
@@ -287,6 +304,7 @@ INSERT INTO tb_filme VALUES (
 
 
 
+/
 INSERT INTO tb_filme VALUES (
     tp_filme(
       4,
@@ -314,10 +332,9 @@ INSERT INTO tb_filme VALUES (
 );
 /
 
-
-INSERT INTO tb_sala VALUES (
+   INSERT INTO tb_sala VALUES (
     tp_sala(
-      1,
+      7,
       5,
       tp_nt_assentos(
         tp_assento(
@@ -327,28 +344,28 @@ INSERT INTO tb_sala VALUES (
         tp_assento(
           2,
           'Normal'
-        )
+        ),
         tp_assento(
           3,
           'Normal'
-        )
+        ), 
         tp_assento(
           4,
           'Normal'
-        )
+        ),
         tp_assento(
           5,
           'Normal'
-        )
+        ) 
       )
     )
-);
-
+); 
 /
-INSERT INTO tb_sala VALUES (
+
+   INSERT INTO tb_sala VALUES (
     tp_sala(
-      2,
-      10,
+      1217,
+      5,
       tp_nt_assentos(
         tp_assento(
           1,
@@ -361,7 +378,7 @@ INSERT INTO tb_sala VALUES (
         tp_assento(
           3,
           'Normal'
-        ),
+        ), 
         tp_assento(
           4,
           'Normal'
@@ -369,35 +386,74 @@ INSERT INTO tb_sala VALUES (
         tp_assento(
           5,
           'Normal'
-        ),
-        tp_assento(
-          6,
-          'Normal'
-        ),
-        tp_assento(
-          7,
-          'Especial'
-        ),
-        tp_assento(
-          8,
-          'Normal'
-        ),
-        tp_assento(
-          9,
-          'Especial'
-        ),
-        tp_assento(
-          10,
-          'Especial'
-        )
+        ) 
       )
     )
-);
+); 
+/
 
+   INSERT INTO tb_sala VALUES (
+    tp_sala(
+      3131,
+      5,
+      tp_nt_assentos(
+        tp_assento(
+          1,
+          'Normal'
+        ),
+        tp_assento(
+          2,
+          'Normal'
+        ),
+        tp_assento(
+          3,
+          'Normal'
+        ), 
+        tp_assento(
+          4,
+          'Normal'
+        ),
+        tp_assento(
+          5,
+          'Normal'
+        ) 
+      )
+    )
+); 
+/
+
+   INSERT INTO tb_sala VALUES (
+    tp_sala(
+      313131,
+      5,
+      tp_nt_assentos(
+        tp_assento(
+          1,
+          'Normal'
+        ),
+        tp_assento(
+          2,
+          'Especial'
+        ),
+        tp_assento(
+          3,
+          'Especial'
+        ), 
+        tp_assento(
+          4,
+          'Normal'
+        ),
+        tp_assento(
+          5,
+          'Especial'
+        ) 
+      )
+    )
+); 
 /
 INSERT INTO tb_sala VALUES (
     tp_sala(
-      3,
+      133,
       3,
       tp_nt_assentos(
         tp_assento(
@@ -418,7 +474,7 @@ INSERT INTO tb_sala VALUES (
 /
 INSERT INTO tb_sala VALUES (
     tp_sala(
-      4,
+     3124,
       8,
       tp_nt_assentos(
         tp_assento(
@@ -459,6 +515,8 @@ INSERT INTO tb_sala VALUES (
 
 /
 
+
+
 INSERT INTO tb_reserva VALUES (
   tp_reserva(
   (TO_DATE('2022-07-30 13:11', 'yyyy-mm-dd hh24:mi')),
@@ -470,7 +528,7 @@ INSERT INTO tb_reserva VALUES (
 /
 INSERT INTO tb_limpa VALUES (
     (TO_DATE('2022-07-30 13:11', 'yyyy-mm-dd hh24:mi')),
-    (SELECT REF(S) FROM tb_sala S WHERE S.id_sala = 1),
+    (SELECT REF(S) FROM tb_sala S WHERE S.id_sala = 133),
     (SELECT REF(C) FROM tb_funcionario C WHERE C.cpf = '132.462.635-97')
 );
 -- ACIMA ESTÁ CORRETO
