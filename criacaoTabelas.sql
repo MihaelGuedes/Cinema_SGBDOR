@@ -71,7 +71,7 @@ CREATE TABLE tb_filme OF tp_filme(
 -- TABELA DE ASSENTO --
 CREATE TABLE tb_assento OF tp_assento(
     cod_assento PRIMARY KEY,
-    tipo_assento NOT NULL,
+    tipo_assento NOT NULL
 );
 /
 
