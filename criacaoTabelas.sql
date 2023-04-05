@@ -67,18 +67,18 @@ CREATE TABLE tb_filme OF tp_filme(
     diretor NOT NULL
 );
 
--- TABELA DE SALA --
-CREATE TABLE tb_sala OF tp_sala(
-    id_sala PRIMARY KEY,
-    capacidade NOT NULL
-) NESTED TABLE assentos STORE AS assentos_da_sala;
-/
-
 -- TABELA DE ASSENTO --
 CREATE TABLE tb_assento OF tp_assento(
     cod_assento PRIMARY KEY,
     tipo_assento NOT NULL
 );
+/
+
+-- TABELA DE SALA --
+CREATE TABLE tb_sala OF tp_sala(
+    id_sala PRIMARY KEY,
+    capacidade NOT NULL
+) NESTED TABLE assentos STORE AS assentos_da_sala;
 /
 
 -- TABELA DE RESERVA --
