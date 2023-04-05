@@ -66,6 +66,7 @@ CREATE TABLE tb_filme OF tp_filme(
     duracao NOT NULL,
     diretor NOT NULL
 );
+/
 
 -- TABELA DE ASSENTO --
 CREATE TABLE tb_assento OF tp_assento(
@@ -96,4 +97,3 @@ CREATE TABLE tb_limpa OF tp_limpa(
     sala WITH ROWID REFERENCES tb_sala NOT NULL,
     funcionario WITH ROWID REFERENCES tb_funcionario NOT NULL
 );
-
