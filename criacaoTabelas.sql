@@ -77,8 +77,7 @@ CREATE TABLE tb_sala OF tp_sala(
 -- TABELA DE ASSENTO --
 CREATE TABLE tb_assento OF tp_assento(
     cod_assento PRIMARY KEY,
-    tipo_assento NOT NULL,
-    sala WITH ROWID REFERENCES tb_sala NOT NULL
+    tipo_assento NOT NULL
 );
 /
 

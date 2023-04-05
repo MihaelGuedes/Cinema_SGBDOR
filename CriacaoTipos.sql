@@ -174,8 +174,7 @@ END;
 
 CREATE OR REPLACE TYPE tp_assento AS OBJECT (
     cod_assento NUMBER,
-    tipo_assento VARCHAR2(10),
-    sala REF tp_sala
+    tipo_assento VARCHAR2(10)
 );
 /
 
