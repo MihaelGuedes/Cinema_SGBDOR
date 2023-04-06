@@ -531,4 +531,84 @@ INSERT INTO tb_limpa VALUES (
     (SELECT REF(S) FROM tb_sala S WHERE S.id_sala = 133),
     (SELECT REF(C) FROM tb_funcionario C WHERE C.cpf = '132.462.635-97')
 );
--- ACIMA ESTÁ CORRETO
+
+/
+DECLARE
+	funcionario tp_funcionario;
+BEGIN
+	SELECT VALUE(F) INTO funcionario FROM tb_funcionario F WHERE cpf = '232.462.625-97';
+	funcionario.get_pessoa_info();
+
+END;
+
+/
+DECLARE
+	funcionario tp_funcionario;
+BEGIN
+	SELECT VALUE(F) INTO funcionario FROM tb_funcionario F WHERE cpf = '232.462.625-97';
+	funcionario.get_pessoa_endereco();
+
+END;
+
+/
+DECLARE
+	cliente tp_cliente;
+BEGIN
+	SELECT VALUE(C) INTO cliente FROM tb_cliente C WHERE cpf = '987.654.321-00';
+	cliente.get_pessoa_info();
+
+END;
+/
+DECLARE
+	cliente tp_cliente;
+BEGIN
+	SELECT VALUE(C) INTO cliente FROM tb_cliente C WHERE cpf = '987.654.321-00';
+	cliente.get_fidelidade_cliente();
+
+END;
+/
+
+DECLARE
+	cliente tp_cliente;
+BEGIN
+	SELECT VALUE(C) INTO cliente FROM tb_cliente C WHERE cpf = '987.654.321-00';
+	cliente.get_pessoa_endereco();
+
+END;
+/
+
+DECLARE
+    cupom1 tp_cupom;
+    cupom2 tp_cupom;
+    resultado NUMBER;
+BEGIN
+    cupom1 := tp_cupom(1, 0.5);
+    cupom2 := tp_cupom(2, 0.8);
+    
+    resultado := cupom1.comparar_desconto(cupom2);
+    DBMS_OUTPUT.PUT_LINE(resultado);
+END;
+/
+
+DECLARE
+	compra tp_compra;
+	valor NUMBER;
+
+BEGIN
+	SELECT VALUE(C) INTO compra FROM tb_compra C WHERE id_compra = 1;
+	valor := compra.get_ingresso_com_desconto();
+	DBMS_OUTPUT.PUT_LINE('Valor com desconto R$ ' || valor);
+END;
+/
+
+DECLARE
+    filme tp_filme;	
+	qtd_elenco NUMBER;
+BEGIN
+    SELECT VALUE(C) INTO filme FROM tb_filme C WHERE id_filme =4 ;
+	qtd_elenco := filme.num_elenco();
+	DBMS_OUTPUT.PUT_LINE('---------------------');
+	DBMS_OUTPUT.PUT_LINE('Quantidade de elenco: ' || qtd_elenco);
+	DBMS_OUTPUT.PUT_LINE('---------------------');
+	filme.get_filme_info();
+END;

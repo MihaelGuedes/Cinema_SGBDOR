@@ -50,9 +50,9 @@ CREATE TABLE tb_ingresso OF tp_ingresso (
 CREATE TABLE tb_compra OF tp_compra (
     id_compra PRIMARY KEY,
     data_compra NOT NULL,
-    ingresso WITH ROWID REFERENCES tb_ingresso NOT NULL,
-    cliente WITH ROWID REFERENCES tb_cliente NOT NULL,
-    cupom WITH ROWID REFERENCES tb_cupom NOT NULL
+    ingresso SCOPE IS tb_ingresso NOT NULL,
+    cliente SCOPE IS tb_cliente NOT NULL,
+    cupom SCOPE IS tb_cupom NOT NULL
 );
 /
 
