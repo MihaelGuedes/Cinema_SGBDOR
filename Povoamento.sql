@@ -2,7 +2,7 @@
 INSERT INTO tb_cliente VALUES (
     tp_cliente(
         '132.462.635-17',
-        'Jabulani',
+        'Renato Garcia',
         tp_arr_telefone(tp_telefone('(81)98279-7555')),
         18,
         tp_endereco('Rua joaquim', 42, '50670-490','Olinda'),
@@ -36,7 +36,7 @@ INSERT INTO tb_cliente VALUES (
 INSERT INTO tb_cliente VALUES (
     tp_cliente(
         '555.666.777-88',
-        'Michael Johnson',
+        'Ronald MacDonald',
         tp_arr_telefone(tp_telefone('(31)55555-4444')),
         40,
         tp_endereco('Avenida Central', 789, '30100-111', 'Belo Horizonte'),
@@ -84,7 +84,7 @@ INSERT INTO tb_cliente VALUES (
 INSERT INTO tb_funcionario VALUES (
     tp_funcionario(
         '132.462.635-97',
-        'Jabulani',
+        'João Doria',
         tp_arr_telefone(tp_telefone('(81)98279-7555')),
         18,
         tp_endereco('Rua joaquim', 42, '50670-490','Olinda'),
@@ -97,7 +97,7 @@ INSERT INTO tb_funcionario VALUES (
 INSERT INTO tb_funcionario VALUES (
     tp_funcionario(
         '232.462.625-97',
-        'Jabulani',
+        'Um Dois da Silva Três',
         tp_arr_telefone(tp_telefone('(81)98279-7555')),
         18,
         tp_endereco('Rua joaquim', 42, '50670-490','Olinda'),
@@ -137,7 +137,7 @@ INSERT INTO tb_funcionario VALUES (
 INSERT INTO tb_funcionario VALUES (
     tp_funcionario(
         '555.666.777-03',
-        'Michael Johnson',
+        'Marcos Castro',
         tp_arr_telefone(tp_telefone('(31)55555-4444')),
         40,
         tp_endereco('Avenida Central', 789, '30100-111', 'Belo Horizonte'),
@@ -167,6 +167,33 @@ INSERT INTO tb_supervisiona VALUES (
     tp_supervisiona(
         (SELECT REF(C) FROM tb_funcionario C WHERE C.cpf = '132.462.635-97'),
        (SELECT REF(C) FROM tb_funcionario C WHERE C.cpf = '232.462.625-97')
+    )
+);
+
+/
+
+INSERT INTO tb_supervisiona VALUES (
+    tp_supervisiona(
+        (SELECT REF(C) FROM tb_funcionario C WHERE C.cpf = '132.462.635-97'),
+       (SELECT REF(C) FROM tb_funcionario C WHERE C.cpf = '777.888.999-04')
+    )
+);
+
+/
+
+INSERT INTO tb_supervisiona VALUES (
+    tp_supervisiona(
+        (SELECT REF(C) FROM tb_funcionario C WHERE C.cpf = '132.462.635-97'),
+       (SELECT REF(C) FROM tb_funcionario C WHERE C.cpf = '555.666.777-03')
+    )
+);
+
+/
+
+INSERT INTO tb_supervisiona VALUES (
+    tp_supervisiona(
+        (SELECT REF(C) FROM tb_funcionario C WHERE C.cpf = '132.462.635-97'),
+       (SELECT REF(C) FROM tb_funcionario C WHERE C.cpf = '957.654.321-01')
     )
 );
 
@@ -265,6 +292,17 @@ INSERT INTO tb_compra VALUES (
     );
 /
 
+INSERT INTO tb_compra VALUES (
+  tp_compra(
+    id_compra.NEXTVAL,
+  (TO_DATE('2022-07-30 13:21', 'yyyy-mm-dd hh24:mi')),
+    (SELECT REF(I) FROM tb_ingresso I WHERE I.COD_INGRESSO = 3123),
+    (SELECT REF(C) FROM tb_cliente C WHERE C.CPF = '987.654.321-00'),
+    (SELECT REF(CP) FROM tb_cupom CP WHERE CP.id_cupom = 2)
+)
+    );
+/
+
 INSERT INTO tb_filme VALUES (
     tp_filme(
       1,
@@ -328,6 +366,19 @@ INSERT INTO tb_filme VALUES (
       tp_arr_elenco(tp_elenco('Tom Hanks')),
       '01:40',
       'Josh Cooley'
+    )
+);
+/
+
+INSERT INTO tb_filme VALUES (
+    tp_filme(
+      6,
+      'Drama',
+      10,
+      'Forest Gump',
+      tp_arr_elenco(tp_elenco('Tom Hanks')),
+      '01:40',
+      'Robert Zemeckis'
     )
 );
 /
@@ -526,13 +577,28 @@ INSERT INTO tb_reserva VALUES (
     )
 );
 /
+
 INSERT INTO tb_limpa VALUES (
     (TO_DATE('2022-07-30 13:11', 'yyyy-mm-dd hh24:mi')),
-    (SELECT REF(S) FROM tb_sala S WHERE S.id_sala = 133),
-    (SELECT REF(C) FROM tb_funcionario C WHERE C.cpf = '132.462.635-97')
+    (SELECT REF(S) FROM tb_sala S WHERE S.id_sala = 7),
+    (SELECT REF(C) FROM tb_funcionario C WHERE C.cpf = '232.462.625-97')
 );
-
 /
+
+INSERT INTO tb_limpa VALUES (
+    (TO_DATE('2022-07-30 17:40', 'yyyy-mm-dd hh24:mi')),
+    (SELECT REF(S) FROM tb_sala S WHERE S.id_sala = 1217),
+    (SELECT REF(C) FROM tb_funcionario C WHERE C.cpf = '232.462.625-97')
+);
+/
+
+INSERT INTO tb_limpa VALUES (
+    (TO_DATE('2022-07-30 19:50', 'yyyy-mm-dd hh24:mi')),
+    (SELECT REF(S) FROM tb_sala S WHERE S.id_sala = 3131),
+    (SELECT REF(C) FROM tb_funcionario C WHERE C.cpf = '232.462.625-97')
+);
+/
+
 DECLARE
 	funcionario tp_funcionario;
 BEGIN
