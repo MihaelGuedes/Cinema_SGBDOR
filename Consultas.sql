@@ -103,3 +103,72 @@ WHERE l.sala = (
     WHERE s.id_sala = 3131
 );
 /
+
+-- Acessando o nome do funcionário que tem o maior salário:
+SELECT nome
+FROM tb_funcionario
+WHERE salario = (
+  SELECT MAX(salario) 
+  FROM tb_funcionario
+);
+/
+
+-- Acessando o nome, data de nascimento e o endereço do cliente com o menor número de compras realizadas
+SELECT nome, data_nascimento, endereco
+FROM tb_cliente
+WHERE num_compras = (
+  SELECT MIN(num_compras) 
+  FROM tb_cliente
+);
+/
+
+-- Acessando o nome do ator/atriz que apareceu em mais filmes:
+SELECT nome_ator, COUNT(*) AS num_filmes
+FROM tb_elenco
+GROUP BY nome_ator
+ORDER BY num_filmes DESC
+FETCH FIRST ROW ONLY;
+/
+
+-- Acessando a média de idade dos clientes que compraram ingressos para o filme com ID 123:
+SELECT AVG(EXTRACT(YEAR FROM AGE(data_nascimento))) AS media_idade
+FROM tb_compra c, TABLE(c.ingressos) i
+WHERE DEREF(i).filme.id_filme = 123;
+/
+
+-- Acessando o nome do funcionário que vendeu o maior valor em ingressos no mês de janeiro de 2023
+SELECT DEREF(funcionario).nome AS nome_funcionario, SUM(DEREF(ingresso).valor) AS total_vendido
+FROM tb_compra c, TABLE(c.ingressos) i
+WHERE EXTRACT(MONTH FROM c.data_compra) = 1 AND EXTRACT(YEAR FROM c.data_compra) = 2023
+GROUP BY DEREF(funcionario).nome
+ORDER BY total_vendido DESC
+FETCH FIRST ROW ONLY;
+/
+
+-- Selecionando o nome dos filmes que foram exibidos em todas as salas
+SELECT f.nome 
+FROM tb_filme f
+WHERE NOT EXISTS (
+    SELECT s.id_sala 
+    FROM tb_sala s 
+    WHERE NOT EXISTS (
+        SELECT r.id_reserva 
+        FROM tb_reserva r 
+        WHERE r.sala = REF(s) AND r.filme = REF(f)
+    )
+);
+/
+
+-- Selecionando o nome dos filmes que foram exibidos apenas em salas com capacidade superior a 200
+SELECT f.nome 
+FROM tb_filme f
+WHERE NOT EXISTS (
+    SELECT s.id_sala 
+    FROM tb_sala s 
+    WHERE s.capacidade <= 200 AND EXISTS (
+        SELECT r.id_reserva 
+        FROM tb_reserva r 
+        WHERE r.sala = REF(s) AND r.filme = REF(f)
+    )
+);
+/
