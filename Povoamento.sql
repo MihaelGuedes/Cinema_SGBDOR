@@ -280,6 +280,54 @@ INSERT INTO tb_ingresso VALUES (
   )
 );
 /
+INSERT INTO tb_ingresso VALUES (
+  tp_ingresso(
+      '1162',
+      'M',
+      40
+  )
+);
+/
+INSERT INTO tb_ingresso VALUES (
+  tp_ingresso(
+      '4538',
+      'I',
+      87
+  )
+);
+/
+INSERT INTO tb_ingresso VALUES (
+  tp_ingresso(
+      '8984',
+      'M',
+      17
+  )
+);
+/
+INSERT INTO tb_ingresso VALUES (
+  tp_ingresso(
+      '5767',
+      'I',
+      120
+  )
+);
+/
+INSERT INTO tb_ingresso VALUES (
+  tp_ingresso(
+      '8457',
+      'M',
+      15
+  )
+);
+/
+INSERT INTO tb_ingresso VALUES (
+  tp_ingresso(
+      '4236',
+      'I',
+      150
+  )
+);
+/
 
 INSERT INTO tb_compra VALUES (
   tp_compra(

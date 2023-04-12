@@ -172,3 +172,46 @@ WHERE NOT EXISTS (
     )
 );
 /
+
+--Selecionando o valor de ingresso mínimo comprado por um cliente
+SELECT  DEREF(C.cliente).nome AS Nome, DEREF(C.ingresso).cod_ingresso AS COD_Ingresso,DEREF(C.ingresso).valor AS Valor_Ingresso
+FROM tb_compra C
+WHERE DEREF(C.ingresso).valor IN(
+    SELECT MIN(DEREF(C2.ingresso).valor)
+    FROM tb_compra C2
+);
+/
+
+--Selecionando a quantidade de inregssos os separando por seus tipos
+SELECT COUNT (I.tipo_ingresso) AS QTD_tipo, I.tipo_ingresso
+FROM tb_ingresso I
+GROUP BY (I.tipo_ingresso);
+/
+
+--Selecionando os códigos ordenaodos de ingressos que estejam sendo vendidos pelo valor de 20 até 100 reais
+SELECT I.cod_ingresso, I.valor AS Valor_ingresso
+FROM tb_ingresso I
+WHERE I.valor BETWEEN 20 AND 100
+ORDER BY I.cod_ingresso ASC;
+/
+
+--Selecionando todos tipos de assentos e suas quantidades ordenando poelo ide de cada sala
+SELECT S.id_sala, COUNT (A.tipo_assento) AS QTD_assentos, A.tipo_assento
+FROM tb_sala S, TABLE (S.assentos) A
+GROUP BY A.tipo_assento, S.id_sala
+ORDER BY S.id_sala;
+/
+--Selecionando o Id das salas que possuem assento especial e sua quantidade
+SELECT S.id_sala, COUNT (A.tipo_assento) AS QTD_assento
+FROM tb_sala S, TABLE (S.assentos) A
+WHERE A.tipo_assento = 'Especial'
+GROUP BY S.id_sala;
+/
+--Selecionando o Id das salas que possuem assento normal e sua quantidade
+SELECT S.id_sala, COUNT (A.tipo_assento) AS QTD_assento
+FROM tb_sala S, TABLE (S.assentos) A
+WHERE A.tipo_assento = 'Normal'
+GROUP BY S.id_sala;
+/
+
+
